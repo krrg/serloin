@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function() {
+  $('#submit-btn').click(function() {
+    $('#waiting-div').show('display', 'block');
+    //Add other code for fetching results here.
+  });
+});
