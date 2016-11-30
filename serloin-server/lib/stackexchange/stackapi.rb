@@ -33,6 +33,8 @@ class ThrottledHTTP
 
     response = HTTParty.get(uri, query)
     unless response.code == 200
+      puts "[Warning] Got response code `#{response.code}` which is not a Teapot."
+      puts response.body
       return {"items": []}
     end
 
@@ -50,14 +52,19 @@ end
 
 class StackExchangeRequestBuilder
 
-  def initialize(base_uri='api.stackexchange.com', version='2.2', site='stackoverflow', api_key=nil)
+  def initialize(base_uri: 'api.stackexchange.com', version: '2.2', site: 'stackoverflow', access_token: nil)
     @base_uri = base_uri
     @version = version
     @site = site
+    @access_token = access_token
     @http = ThrottledHTTP.new
   end
 
   def build_request(path, query_params={})
+    unless @access_token.nil?
+      query_params.merge!({"access_token" => @access_token, "key" => ")T2x8ZEOMl8neRq7th6VRg(("})
+    end
+
     yield(
       "https://#{@base_uri}/#{@version}#{path}",
       query_params.merge({"site" => @site})
@@ -80,13 +87,17 @@ class StackExchangeRequestBuilder
 
     responses = (1..pages).map do |page|
       build_request "/tags", query_params.merge({"page" => page}) do |uri, query|
+        puts "Here is my awesome query #{query}"
         @http.get_json(uri, :query => query)
       end
     end
 
+    puts responses
+
     responses
-      .flat_map { |response| response["items"]}
+      .flat_map { |response| response["items"] }
       .map { |tag| tag["name"] }
+
   end
 
 
@@ -104,12 +115,12 @@ class StackExchangeRequestBuilder
 
 end
 
-S = StackExchangeRequestBuilder.new
+S = StackExchangeRequestBuilder.new(access_token: "D6zqa4HRNjy2JbUDGKIaXQ))")
 
-S.tags(pages=4).map do |tag|
+S.tags(4).map do |tag|
   File.open("../../../data/#{tag}.json", "w") do |file|
     puts "Getting top answerers for tag `#{tag}`"
-    response = S.top_answerers_for_tag(tag)
+    response = S.top_answerers_for_tag(URI.escape(tag))
     file.write(response.to_json)
   end
 end
