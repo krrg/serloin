@@ -12,4 +12,12 @@ class Graph < ActiveRecord::Base
     end
   end
 
+  def Graph.upvotes_for_src(src_tag)
+    self.where("src_tag = ? and dest_tag != ?", src_tag, src_tag).order(upvotes: :desc)
+  end
+
+  def Graph.upvotes_for_tags(src_tag, dest_tag)
+    self.where("src_tag = ? and dest_tag = ?", src_tag, dest_tag)
+  end
+
 end
