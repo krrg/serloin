@@ -47,7 +47,7 @@ class ThrottledHTTP
     result
   end
 
-  rate_limit :get_json, 60, 60  # 1 GET request every 1 second
+  rate_limit :get_json, 90, 60  # 1 GET request every 1 second
 end
 
 class StackExchangeRequestBuilder
@@ -104,8 +104,23 @@ class StackExchangeRequestBuilder
   def top_answerers_for_tag(tag)
     path = "/tags/#{tag}/top-answerers/all_time"
     query_params = {
-      "pagesize": 100,
+      "pagesize": 50,
       "filter": "!-pcLI4I7",
+    }
+
+    build_request path, query_params do |uri, query|
+      @http.get_json(uri, :query => query)
+    end
+  end
+
+  def answer_tags_for_user(userid)
+    path = "/users/#{userid}/answers"
+    query_params = {
+      "pagesize": 90,
+      "filter": "!SWJ_BpAceOUGGWr5yQ",
+      "min": 1,
+      "order": "desc",
+      "sort": "votes",
     }
 
     build_request path, query_params do |uri, query|
@@ -115,12 +130,30 @@ class StackExchangeRequestBuilder
 
 end
 
-S = StackExchangeRequestBuilder.new(access_token: "D6zqa4HRNjy2JbUDGKIaXQ))")
+S = StackExchangeRequestBuilder.new(access_token: "<access_token here>")
 
-S.tags(4).map do |tag|
-  File.open("../../../data/#{tag}.json", "w") do |file|
-    puts "Getting top answerers for tag `#{tag}`"
-    response = S.top_answerers_for_tag(URI.escape(tag))
-    file.write(response.to_json)
+File.open("../../../data/edge_entries.csv", "w") do |edge_file|
+  S.tags(1).map do |tag|
+    File.open("../../../data/#{tag}.json", "w") do |file|
+      puts "Getting top answerers for tag `#{tag}`"
+      response = S.top_answerers_for_tag(URI.escape(tag))
+      
+      user_ids = response["items"].map { |top_answerer| top_answerer["user"]["user_id"] }
+
+      user_ids.each do |userid|
+        puts "\t Getting answer tags for user #{userid} under tag #{tag}"
+        answer_tags = S.answer_tags_for_user(userid)["items"]
+
+        answer_tags.each do |answer|
+          upvotes = answer["score"]
+          answer["tags"].each do |tag2|
+            edge_file.write([tag, tag2, upvotes].join(",") + "\n")
+          end
+        end
+
+      end
+    end
   end
 end
+
+
