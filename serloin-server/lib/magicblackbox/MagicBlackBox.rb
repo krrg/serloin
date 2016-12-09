@@ -7,14 +7,14 @@ class MagicBlackBoxCategory
 		@children = children
 		@calculationFunction = calculationFunction
 	end
-	
+
 	def calculateWeightedScore(value)
 		normalizedValue = value / @maxValue
 		totalWeighting = @weight
-		
+
 		weightedScore = value * totalWeighting
 	end
-	
+
 end
 
 
@@ -22,7 +22,7 @@ class MagicBlackBox
 
 	def calculateRecency()
 		minTimeThreshold = 60
-		highTimeThreshold = 60 * 20 
+		highTimeThreshold = 60 * 20
 
 		deltaTime = @currentTime - @currentQuestion.creationTime
 
@@ -34,9 +34,10 @@ class MagicBlackBox
 			return 1 - (deltaTime/highTimeThreshold)
 		end
 	end
-  	def calculateNotAnswered()
-		
-	  	pointsThreshold = 25
+
+  def calculateNotAnswered()
+
+	  pointsThreshold = 25
 
 		if @currentQuestion.numberOfFlags == 0
 			return 1
@@ -62,7 +63,7 @@ class MagicBlackBox
 
 		return endValue
 	end
-	
+
 	def calculateBountyAvailable()
 		if @currentQuestion.bountyAvailable == true
 			return 1
@@ -70,11 +71,11 @@ class MagicBlackBox
 
 		return 0
 	end
-	
+
 	def calculateQuestionQuality()
 		flagThreshold = 3
 		repThreshold = 10
-		
+
 		flagWeight = 0.5
 		repWeight = 0.5
 
@@ -92,8 +93,8 @@ class MagicBlackBox
 		endValue = 1 - (flagScore + repScore)
 		return endValue
 	end
-	
-  	def calculateQuestionDifficulty()
+
+  def calculateQuestionDifficulty()
 		pointThreshold = 10
 		pageViewThreshold = 100
 
@@ -141,17 +142,17 @@ class MagicBlackBox
 
 		return easinessScore
 	end
-	
+
 	def calculateQuestionRelevance()
 		#do nothing
-		
+
 	end
-	
+
 	def getValueFromAdjacencyGraph(tag, qtag)
-	{
+
 		#todo: actually get value from graph
 		return 9
-	}
+	end
 
 	def calculateTagRelevance()
 		#n = @currentUser.tagList.Count
@@ -206,12 +207,12 @@ class MagicBlackBox
 		endValue = 1 - dAverage
 
 	end
-	  
+
 	def calculateScoreRatingCategories()
 		#do nothing
-		
+
 	end
-	
+
 	def calculateDealBreakerCategory()
 		if @questionIsClosedForAnswers == true
 			if @questionIsClosedForAnswersUnderRepOf >= @currentUsersRep
@@ -220,7 +221,7 @@ class MagicBlackBox
 		end
 		return 1
 	end
-	
+
 	def calculateEverythingCategory()
 		#do nothing
 	end
@@ -232,11 +233,11 @@ class MagicBlackBox
 				childrenValue = childrenValue + calculateValues(child)
 			end
 		end
-		
+
 		myValue = category.calculationFunction()
 		myWeightedValue = category.calculateWeightedScore(myValue + childrenValue)
 	end
-	
+
 
 	def initialize()
 
@@ -256,25 +257,22 @@ class MagicBlackBox
 	@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.05, 1, nil, method(:calculateBountyAvailable))
 	@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
 	@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
-	
-	@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1, 
+
+	@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1,
 		[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
-		
+
 	@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.5, 1, nil, method(:calculateTagRelevance))
 
-	@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1, 
+	@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1,
 		[@questionRelevance,@scoreRatingCategories], method(:calculateScoreRatingCategories))
-		
+
 	@dealBreakerCategory = MagicBlackBoxCategory.new("dealBreakerCategory", 0.5, 1, nil, method(:calculateDealBreakerCategory))
 
-	@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1, 
+	@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1,
 		[@scoreRatingCategories, @dealBreakerCategory], method(:calculateEverythingCategory))
 	end
-    
+
 	def runBlackBox()
 	calculateValues(@everythingCategory)
 	end
 end
-
-
-
