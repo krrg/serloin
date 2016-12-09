@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  src_tag: MyString
+  dest_tag: MyString
+  upvotes: 1
+
+two:
+  src_tag: MyString
+  dest_tag: MyString
+  upvotes: 1
