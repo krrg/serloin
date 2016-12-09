@@ -1,3 +1,3 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :stackoverflow, '<client_id>', '<oauth secret>', :scope => 'no_expiry', :oauth_key => '<oauth key>'
+  provider :stackoverflow, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], :scope => 'no_expiry', :oauth_key => ENV['CLIENT_KEY']
 end
