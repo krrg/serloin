@@ -151,21 +151,14 @@ class MagicBlackBox
 
 	def calculateQuestionRelevance()
 		#do nothing
-<<<<<<< HEAD:serloin-server/lib/magicblackbox/MagicBlackBox.rb
 		return 0
 	end
 	
-
-=======
-
-	end
-
 	def getValueFromAdjacencyGraph(tag, qtag)
 
 		#todo: actually get value from graph
 		return 9
 	end
->>>>>>> ed23adbd2c870a5598344f96c69572b38e68d3f6:lib/magicblackbox/MagicBlackBox.rb
 
 	def calculateTagRelevance()
 		n = @user.tagReputationHash.length
@@ -209,11 +202,7 @@ class MagicBlackBox
 
 	def calculateScoreRatingCategories()
 		#do nothing
-<<<<<<< HEAD:serloin-server/lib/magicblackbox/MagicBlackBox.rb
 		return 0
-=======
-
->>>>>>> ed23adbd2c870a5598344f96c69572b38e68d3f6:lib/magicblackbox/MagicBlackBox.rb
 	end
 
 	def calculateDealBreakerCategory()
@@ -238,16 +227,6 @@ class MagicBlackBox
 				childrenValue = childrenValue + childValue
 			end
 		end
-<<<<<<< HEAD:serloin-server/lib/magicblackbox/MagicBlackBox.rb
-=======
-
-		myValue = category.calculationFunction()
-		myWeightedValue = category.calculateWeightedScore(myValue + childrenValue)
-	end
-
-
-	def initialize()
->>>>>>> ed23adbd2c870a5598344f96c69572b38e68d3f6:lib/magicblackbox/MagicBlackBox.rb
 
 		myValue = category.calculationFunction.call()
 
@@ -262,7 +241,6 @@ class MagicBlackBox
 
 	def initialize(magicBlackBoxParameters)
 
-<<<<<<< HEAD:serloin-server/lib/magicblackbox/MagicBlackBox.rb
 		@user = magicBlackBoxParameters.currentUser
 		@question = magicBlackBoxParameters.currentQuestion
 		@adjacencyData = magicBlackBoxParameters.adjacencyGraphData
@@ -287,33 +265,11 @@ class MagicBlackBox
 		@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1, 
 			[@scoreRatingCategories, @dealBreakerCategory], method(:calculateEverythingCategory))
     end
-=======
-	@recency = MagicBlackBoxCategory.new("recency", 0.15, 1, nil, method(:calculateRecency))
-	@notAnswered = MagicBlackBoxCategory.new("notAnswered", 0.3, 1, nil, method(:calculateNotAnswered))
-	@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.05, 1, nil, method(:calculateBountyAvailable))
-	@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
-	@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
 
-	@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1,
-		[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
-
-	@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.5, 1, nil, method(:calculateTagRelevance))
-
-	@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1,
-		[@questionRelevance,@scoreRatingCategories], method(:calculateScoreRatingCategories))
-
-	@dealBreakerCategory = MagicBlackBoxCategory.new("dealBreakerCategory", 0.5, 1, nil, method(:calculateDealBreakerCategory))
-
-	@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1,
-		[@scoreRatingCategories, @dealBreakerCategory], method(:calculateEverythingCategory))
-	end
-
->>>>>>> ed23adbd2c870a5598344f96c69572b38e68d3f6:lib/magicblackbox/MagicBlackBox.rb
 	def runBlackBox()
 	calculateValues(@everythingCategory)
 	end
 end
-<<<<<<< HEAD:serloin-server/lib/magicblackbox/MagicBlackBox.rb
 
 #sampleData
 tagReputationHash = Hash.new
@@ -350,5 +306,3 @@ magicBlackBoxParameters = MagicBlackBoxParameters.new(moocurrentUser, currentQue
 blackBox = MagicBlackBox.new(magicBlackBoxParameters)
 
 puts blackBox.runBlackBox()
-=======
->>>>>>> ed23adbd2c870a5598344f96c69572b38e68d3f6:lib/magicblackbox/MagicBlackBox.rb
