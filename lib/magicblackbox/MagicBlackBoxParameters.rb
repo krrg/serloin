@@ -33,8 +33,8 @@ class MagicBlackBoxCurrentQuestion
   attr_reader :pageViews
   attr_reader :questionCreatorReputation
   attr_reader :questionIsClosedForAnswers
-	def initialize(tagsSet, upvotesOfAnswersWithoutFlagsList, creationTime, 
-				bountyAvailable, numberOfFlags, questionUpvotes, pageViews, 
+	def initialize(tagsSet, upvotesOfAnswersWithoutFlagsList, creationTime,
+				bountyAvailable, numberOfFlags, questionUpvotes, pageViews,
 				questionCreatorReputation, questionIsClosedForAnswers)
 
 		@tagsSet = tagsSet
@@ -61,12 +61,10 @@ class MagicBlackBoxAdjacencyGraphData
 				adjacencyGraphData[tag] += getValueFromAdjacencyGraph(tag, qtag)
 			end
 		end
-        
-    end
 
-    def getValueFromAdjacencyGraph(tag, qtag)
-	
-		#todo: actually get value from graph
-		return 9
-	end
+  end
+
+  def getValueFromAdjacencyGraph(tag, qtag)
+     Graph.upvotes_for_tags(tag, qtag)
+  end
 end
