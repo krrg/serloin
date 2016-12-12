@@ -59,7 +59,7 @@ class MagicBlackBoxAdjacencyGraphData
 	def initialize(currentUser, currentQuestion)
         @adjacencyGraphData = Hash.new
 
-		currentUser.tagReputationHash.keys each do |tag|
+		currentUser.tagReputationHash.each_key do |tag|
 			currentQuestion.tagsSet.keys each do |qtag|
 				adjacencyGraphData[tag] += getValueFromAdjacencyGraph(tag, qtag)
 			end
