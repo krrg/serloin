@@ -26,12 +26,12 @@ class SessionController < ApplicationController
       redirect_to root_url
     end
 
-    @access_token = response.code.split('=')[1]
+    session[:access_token] = response.code.split('=')[1]
 
   end
 
   def results
-    requ_builder =  StackExchangeRequestBuilder.new(access_token: @access_token, app_key: ENV['CLIENT_KEY'])
+    requ_builder = StackExchangeRequestBuilder.new(access_token: session[:access_token], app_key: ENV['CLIENT_KEY'])
     user_info = requ_builder.current_user_info()
     recent_questions = requ_builder.most_recent_questions()
 
@@ -43,6 +43,6 @@ class SessionController < ApplicationController
       questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
     end
     questionList.sort_by {|question,score| [-score]}
-    
+
   end
 end
