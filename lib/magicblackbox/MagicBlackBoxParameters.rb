@@ -4,13 +4,14 @@ class MagicBlackBoxParameters
   attr_reader :adjacencyGraphData
   attr_reader :currentTime
 
-	def initialize(currentUser, currentQuestion, adjacencyGraphData, currentTime)
-		@currentUser = currentUser
-		@currentQuestion = currentQuestion
-		@adjacencyGraphData = adjacencyGraphData
-		@currentTime = currentTime
-	end
+    def initialize(currentUser, currentQuestion, adjacencyGraphData, currentTime)
+        @currentUser = currentUser
+        @currentQuestion = currentQuestion
+        @adjacencyGraphData = adjacencyGraphData
+        @currentTime = currentTime
+    end
 end
+
 
 
 
@@ -47,6 +48,7 @@ class MagicBlackBoxCurrentQuestion
 		@pageViews = pageViews
 		@questionCreatorReputation = questionCreatorReputation
 		@questionIsClosedForAnswers = questionIsClosedForAnswers
+		@questionId = questionId
 	end
 
 end
