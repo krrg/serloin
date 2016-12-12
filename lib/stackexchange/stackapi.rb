@@ -162,7 +162,7 @@ class StackExchangeRequestBuilder
   end
 
 
-  def get_most_recent_questions()
+  def most_recent_questions()
     path = "/questions"
 
     query_params = {
@@ -189,11 +189,12 @@ class StackExchangeRequestBuilder
     page_views = question["view_count"]
     asker_rep = question["owner"]["reputation"]
     is_closed = question.key? "closed_date"
+    question_id = question["question_id"]
 
     MagicBlackBoxCurrentQuestion.new(
       tags, answer_upvotes, creation_date,
       bounty, close_votes, question_upvotes,
-      page_views, asker_rep, is_closed
+      page_views, asker_rep, is_closed, question_id
     )
   end
 

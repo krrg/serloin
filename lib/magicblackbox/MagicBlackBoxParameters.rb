@@ -18,9 +18,10 @@ class MagicBlackBoxCurrentQuestion
   attr_reader :pageViews  # Can we get this?
   attr_reader :questionCreatorReputation  # rep of the asker
   attr_reader :questionIsClosedForAnswers  # is it closed? (boolean)
+	attr_reader :questionId
 	def initialize(tagsSet, upvotesOfAnswersWithoutFlagsList, creationTime,
 				bountyAvailable, numberOfFlags, questionUpvotes, pageViews,
-				questionCreatorReputation, questionIsClosedForAnswers)
+				questionCreatorReputation, questionIsClosedForAnswers, questionId)
 
 		@tagsSet = tagsSet
 		@upvotesOfAnswersWithoutFlagsList = upvotesOfAnswersWithoutFlagsList
