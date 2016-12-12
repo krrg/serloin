@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
   get '/auth/:provider/callback', to: 'session#create'
-  get '/auth/:provider/finalize', to: 'session#finalize'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
