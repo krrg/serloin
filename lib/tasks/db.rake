@@ -3,7 +3,7 @@ namespace :db do
   desc "Load graph edge data from the given CSV file"
   task :load_edges, [:file] => :environment do |t, args|
     args.with_defaults(:file => "edge_entries.csv")
-    file_path = "\\data\\#{args.file}"
+    file_path = "./data/#{args.file}"
     puts "\n**** Loading data from #{file_path} ****\n\n"
     file = File.open(file_path)
     count = 1
