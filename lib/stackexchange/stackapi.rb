@@ -162,7 +162,7 @@ class StackExchangeRequestBuilder
   end
 
 
-  def get_most_recent_questions()
+  def most_recent_questions()
     path = "/questions"
 
     query_params = {
