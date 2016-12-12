@@ -2,3 +2,23 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
   </script>
 <![endif]-->
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <%= link_to 'SERLOIN', root_path, class: 'navbar-brand' %>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav">
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+      <%= value %>
+    </div>
+  <% end %>
+</div>
