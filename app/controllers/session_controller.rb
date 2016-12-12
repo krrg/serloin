@@ -25,7 +25,8 @@ class SessionController < ApplicationController
       flash[:danger] = "There was an error authenticating with Stack Exchange"
       redirect_to root_url
     end
-    session[:access_token] = response.code.split('=')[1]
+
+    session[:access_token] = @response.code.split('=')[1]
     @access_token = session[:access_token]
   end
 
