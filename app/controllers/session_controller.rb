@@ -19,14 +19,14 @@ class SessionController < ApplicationController
     post_requ = Net::HTTP::Post.new("/oauth/access_token")
     post_requ.add_field('Content-Type', 'application/x-www-form-urlencoded')
     post_requ.set_form_data(params)
-    @response = http.request(post_requ)
+    response = http.request(post_requ)
 
     if Integer(response.code) != 200
       flash[:danger] = "There was an error authenticating with Stack Exchange"
       redirect_to root_url
     end
 
-    session[:access_token] = @response.code.split('=')[1]
+    session[:access_token] = response.code.split('=')[1]
     @access_token = session[:access_token]
   end
 
