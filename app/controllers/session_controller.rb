@@ -26,8 +26,9 @@ class SessionController < ApplicationController
       redirect_to root_url
     end
 
+
     session[:access_token] = response.code.split('=')[1]
-    @access_token = session["access_token"]
+    @access_token = session[:access_token]
   end
 
   def results
