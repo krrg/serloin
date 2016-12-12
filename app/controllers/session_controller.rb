@@ -27,10 +27,11 @@ class SessionController < ApplicationController
     end
 
     session[:access_token] = response.code.split('=')[1]
-
+    @access_token = session["access_token"]
   end
 
   def results
+    puts session[:access_token]
     requ_builder = StackExchangeRequestBuilder.new(access_token: session[:access_token], app_key: ENV['CLIENT_KEY'])
     user_info = requ_builder.current_user_info()
     recent_questions = requ_builder.most_recent_questions()
