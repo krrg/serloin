@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20161129000343) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "graphs", force: :cascade do |t|
     t.string   "src_tag"
     t.string   "dest_tag"
@@ -21,6 +24,6 @@ ActiveRecord::Schema.define(version: 20161129000343) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "graphs", ["src_tag", "dest_tag"], name: "index_graphs_on_src_tag_and_dest_tag", unique: true
+  add_index "graphs", ["src_tag", "dest_tag"], name: "index_graphs_on_src_tag_and_dest_tag", unique: true, using: :btree
 
 end

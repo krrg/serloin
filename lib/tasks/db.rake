@@ -6,11 +6,20 @@ namespace :db do
     file_path = "./data/#{args.file}"
     puts "\n**** Loading data from #{file_path} ****\n\n"
     file = File.open(file_path)
+    hash = Hash.new
+    file.each do |line|
+      data = line.split(",")
+      key = data[0] + ',' + data[1]
+      if !hash.key?(key)
+          hash[key] = 0
+      end
+      hash[key] = hash[key] + Integer(data[2])
+    end
     count = 1
     Graph.transaction do
-      file.each do |line|
-        data = line.split(",")
-        Graph.add_edge(data[0], data[1], Integer(data[2]))
+      hash.each do |key, value| 
+        key_parts = key.split(',')
+        Graph.add_edge(key_parts[0], key_parts[1], Integer(value))
         count = count + 1
         if count % 10000 == 0
           puts "#{count} records loaded"

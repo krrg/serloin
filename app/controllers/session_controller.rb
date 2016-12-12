@@ -1,9 +1,11 @@
 require 'cgi'
 require 'uri'
+require './lib/magicblackbox/MagicBlackBoxParameters'
+require './lib/magicblackbox/MagicBlackBox'
 
 class SessionController < ApplicationController
   def create
-    puts "hello"
+
     uri = URI.parse(request.url)
     params = CGI.parse(uri.query)
     params[:client_id] = ENV['CLIENT_ID']
@@ -23,8 +25,11 @@ class SessionController < ApplicationController
       redirect_to root_url
     end
 
-    token = response.code.split('=')[1]
+    @access_token = response.code.split('=')[1]
 
+  end
+
+  def results
 
   end
 end
