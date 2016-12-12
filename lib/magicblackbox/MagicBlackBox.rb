@@ -252,10 +252,10 @@ class MagicBlackBox
 		@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
 		@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
 		
-		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1, 
+		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.3, 1, 
 			[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
 			
-		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.5, 1, nil, method(:calculateTagRelevance))
+		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.7, 1, nil, method(:calculateTagRelevance))
 
 		@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1, 
 			[@questionRelevance,@tagRelevance], method(:calculateScoreRatingCategories))
@@ -271,38 +271,55 @@ class MagicBlackBox
 	end
 end
 
+class MagicBlackBoxRunner
+	def initialize(currentUser, questionList, adjacencyGraphData)
+		@currentUser = currentUser
+		@questionList = questionList
+		@adjacencyGraphData = adjacencyGraphData
+	end
+	def run()
+	  currentTime = Time.now.to_i
+	  questionList = Hash.new
+	  @questionList.each do |question|
+	  	magicBlackBoxParameters = MagicBlackBoxParameters.new(@currentUser, question, @adjacencyGraphData, currentTime)
+		questionList[question.id] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
+	  end
+	  questionList.sort_by {|question,score| [-score]}
+	end
+end
+
 #sampleData
-tagReputationHash = Hash.new
-tagReputationHash["C#"] = 40
-tagReputationHash["Java"] = 10
-tagReputationHash["PHP"] = 3
+# tagReputationHash = Hash.new
+# tagReputationHash["C#"] = 40
+# tagReputationHash["Java"] = 10
+# tagReputationHash["PHP"] = 3
 
-userReputation = 100
-moocurrentUser = MagicBlackBoxCurrentUser.new(tagReputationHash, userReputation)
+# userReputation = 100
+# moocurrentUser = MagicBlackBoxCurrentUser.new(tagReputationHash, userReputation)
 
-questionTagsSet = ["C#", "Java"]
-questionUpvotesOfAnswersWithoutFlagsList = []
-questionCreationTime = Time.now.to_i - 30
-questionBountyAvailable = true
-questionNumberOfFlags = 0
-questionUpvotes = 5
-questionPageViews = 75
-questionCreatorReputation = 15
-questionIsClosedForAnswers = false
-currentQuestion = MagicBlackBoxCurrentQuestion.new(questionTagsSet, 
-				questionUpvotesOfAnswersWithoutFlagsList, questionCreationTime, 
-				questionBountyAvailable, questionNumberOfFlags, questionUpvotes, 
-				questionPageViews, questionCreatorReputation, questionIsClosedForAnswers)
+# questionTagsSet = ["C#", "Java"]
+# questionUpvotesOfAnswersWithoutFlagsList = []
+# questionCreationTime = Time.now.to_i - 30
+# questionBountyAvailable = true
+# questionNumberOfFlags = 0
+# questionUpvotes = 5
+# questionPageViews = 75
+# questionCreatorReputation = 15
+# questionIsClosedForAnswers = false
+# currentQuestion = MagicBlackBoxCurrentQuestion.new(questionTagsSet, 
+# 				questionUpvotesOfAnswersWithoutFlagsList, questionCreationTime, 
+# 				questionBountyAvailable, questionNumberOfFlags, questionUpvotes, 
+# 				questionPageViews, questionCreatorReputation, questionIsClosedForAnswers)
 
 
-graphData = Hash.new
-graphData["C#"] = 4000
-graphData["Java"] = 1000
-graphData["PHP"] = 200
+# graphData = Hash.new
+# graphData["C#"] = 4000
+# graphData["Java"] = 1000
+# graphData["PHP"] = 200
 
-currentTime = Time.now.to_i
+# currentTime = Time.now.to_i
 
-magicBlackBoxParameters = MagicBlackBoxParameters.new(moocurrentUser, currentQuestion, graphData, currentTime)
-blackBox = MagicBlackBox.new(magicBlackBoxParameters)
+# magicBlackBoxParameters = MagicBlackBoxParameters.new(moocurrentUser, currentQuestion, graphData, currentTime)
+# blackBox = MagicBlackBox.new(magicBlackBoxParameters)
 
-puts blackBox.runBlackBox()
+# puts blackBox.runBlackBox()

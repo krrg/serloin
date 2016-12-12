@@ -1,18 +1,3 @@
-class MagicBlackBoxParameters
-  attr_reader :currentUser
-  attr_reader :currentQuestion
-  attr_reader :adjacencyGraphData
-  attr_reader :currentTime
-
-	def initialize(currentUser, currentQuestion, adjacencyGraphData, currentTime)
-		@currentUser = currentUser
-		@currentQuestion = currentQuestion
-		@adjacencyGraphData = adjacencyGraphData
-		@currentTime = currentTime
-	end
-end
-
-
 
 class MagicBlackBoxCurrentUser
   attr_reader :tagReputationHash
