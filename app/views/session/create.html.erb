@@ -1,8 +1,12 @@
 <% provide(:title, "Create Session") %>
 
 <div class="jumbotron">
-  <h1>It worked!</h1>
-  <h2><%= @response.code %></h2>
-  <h2><%= @response.body %></h2>
-  <h2>Hello</h2>
+  <h1>You were successfully authenticated to Stack Exchange!</h1>
+  <h1><%= link_to "Make Recommendations", recommendation_results_path, class: "btn btn-primary", id: "recommend-btn" %></h1>
+</div>
+
+<div id="waiting-div" class="row text-center" style="display:none;">
+  </br>
+  <i id="waiting-spinner" class="fa fa-gear fa-spin"></i>
+  <h2>Recommending questions to answer...</h2>
 </div>

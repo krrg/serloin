@@ -17,7 +17,7 @@
 //= require_tree .
 
 $(document).ready(function() {
-  $('#submit-btn').click(function() {
+  $('#recommend-btn').click(function() {
     $('#waiting-div').show('display', 'block');
     //Add other code for fetching results here.
   });
