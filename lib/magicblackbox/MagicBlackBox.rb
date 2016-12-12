@@ -282,9 +282,9 @@ class MagicBlackBoxRunner
 	  questionList = Hash.new
 	  @questionList.each do |question|
 	  	magicBlackBoxParameters = MagicBlackBoxParameters.new(@currentUser, question, @adjacencyGraphData, currentTime)
-		questionList[question.id] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
+		questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
 	  end
-	  questionList.sort_by {|question,score| [-score]}
+		questionList.sort_by {|question,score| [-score]}
 	end
 end
 
@@ -295,7 +295,7 @@ end
 # tagReputationHash["PHP"] = 3
 
 # userReputation = 100
-# moocurrentUser = MagicBlackBoxCurrentUser.new(tagReputationHash, userReputation)
+# currentUser123 = MagicBlackBoxCurrentUser.new(tagReputationHash, userReputation)
 
 # questionTagsSet = ["C#", "Java"]
 # questionUpvotesOfAnswersWithoutFlagsList = []
@@ -306,11 +306,30 @@ end
 # questionPageViews = 75
 # questionCreatorReputation = 15
 # questionIsClosedForAnswers = false
+# questionId = 23
 # currentQuestion = MagicBlackBoxCurrentQuestion.new(questionTagsSet, 
 # 				questionUpvotesOfAnswersWithoutFlagsList, questionCreationTime, 
 # 				questionBountyAvailable, questionNumberOfFlags, questionUpvotes, 
-# 				questionPageViews, questionCreatorReputation, questionIsClosedForAnswers)
+# 				questionPageViews, questionCreatorReputation, questionIsClosedForAnswers, questionId)
 
+
+# questionTagsSet2 = ["C#", "Java"]
+# questionUpvotesOfAnswersWithoutFlagsList2 = []
+# questionCreationTime2 = Time.now.to_i - 30
+# questionBountyAvailable2 = false
+# questionNumberOfFlags2 = 1
+# questionUpvotes2 = 5
+# questionPageViews2 = 750
+# questionCreatorReputation2 = 15
+# questionIsClosedForAnswers2 = false
+# questionId2 = 20
+
+# currentQuestion2 = MagicBlackBoxCurrentQuestion.new(questionTagsSet2, 
+# 				questionUpvotesOfAnswersWithoutFlagsList2, questionCreationTime2, 
+# 				questionBountyAvailable2, questionNumberOfFlags2, questionUpvotes2, 
+# 				questionPageViews2, questionCreatorReputation2, questionIsClosedForAnswers2, questionId2)
+
+# questions = [currentQuestion,currentQuestion2]
 
 # graphData = Hash.new
 # graphData["C#"] = 4000
@@ -319,7 +338,9 @@ end
 
 # currentTime = Time.now.to_i
 
-# magicBlackBoxParameters = MagicBlackBoxParameters.new(moocurrentUser, currentQuestion, graphData, currentTime)
-# blackBox = MagicBlackBox.new(magicBlackBoxParameters)
+# blackBoxRunner = MagicBlackBoxRunner.new(currentUser123, questions, graphData)
 
-# puts blackBox.runBlackBox()
+# # magicBlackBoxParameters = MagicBlackBoxParameters.new(currentUser, currentQuestion, graphData, currentTime)
+# # blackBox = MagicBlackBox.new(magicBlackBoxParameters)
+
+# puts blackBoxRunner.run()
