@@ -2,6 +2,7 @@ require 'cgi'
 require 'uri'
 require './lib/magicblackbox/MagicBlackBoxParameters'
 require './lib/magicblackbox/MagicBlackBox'
+require './lib/stackexchange/stackapi'
 
 class SessionController < ApplicationController
   def create
@@ -30,6 +31,9 @@ class SessionController < ApplicationController
   end
 
   def results
+    requ_builder =  StackExchangeRequestBuilder.new(access_token: @access_token, app_key: ENV['CLIENT_KEY'])
+    user_info = requ_builder.current_user_info()
+    recent_questions = requ_builder.most_recent_questions()
 
   end
 end

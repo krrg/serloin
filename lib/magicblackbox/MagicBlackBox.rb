@@ -1,4 +1,4 @@
-require './MagicBlackBoxParameters.rb'
+require_relative './MagicBlackBoxParameters.rb'
 
 class MagicBlackBoxCategory
   attr_reader :name
@@ -153,7 +153,7 @@ class MagicBlackBox
 		#do nothing
 		return 0
 	end
-	
+
 	def getValueFromAdjacencyGraph(tag, qtag)
 
 		#todo: actually get value from graph
@@ -237,7 +237,7 @@ class MagicBlackBox
 		puts "myWeightedValue #{myWeightedValue}"
 		return myWeightedValue
 	end
-	
+
 
 	def initialize(magicBlackBoxParameters)
 
@@ -251,18 +251,18 @@ class MagicBlackBox
 		@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.05, 1, nil, method(:calculateBountyAvailable))
 		@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
 		@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
-		
-		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1, 
+
+		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.5, 1,
 			[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
-			
+
 		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.5, 1, nil, method(:calculateTagRelevance))
 
-		@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1, 
+		@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1,
 			[@questionRelevance,@tagRelevance], method(:calculateScoreRatingCategories))
-			
+
 		@dealBreakerCategory = MagicBlackBoxCategory.new("dealBreakerCategory", 0.5, 1, nil, method(:calculateDealBreakerCategory))
 
-		@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1, 
+		@everythingCategory = MagicBlackBoxCategory.new("everythingCategory", 1, 1,
 			[@scoreRatingCategories, @dealBreakerCategory], method(:calculateEverythingCategory))
     end
 
@@ -289,9 +289,9 @@ questionUpvotes = 5
 questionPageViews = 75
 questionCreatorReputation = 15
 questionIsClosedForAnswers = false
-currentQuestion = MagicBlackBoxCurrentQuestion.new(questionTagsSet, 
-				questionUpvotesOfAnswersWithoutFlagsList, questionCreationTime, 
-				questionBountyAvailable, questionNumberOfFlags, questionUpvotes, 
+currentQuestion = MagicBlackBoxCurrentQuestion.new(questionTagsSet,
+				questionUpvotesOfAnswersWithoutFlagsList, questionCreationTime,
+				questionBountyAvailable, questionNumberOfFlags, questionUpvotes,
 				questionPageViews, questionCreatorReputation, questionIsClosedForAnswers)
 
 

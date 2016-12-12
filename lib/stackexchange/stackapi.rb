@@ -1,6 +1,6 @@
 require "httparty"
 require "glutton_ratelimit"
-require "../magicblackbox/MagicBlackBoxParameters.rb"
+require_relative "../magicblackbox/MagicBlackBoxParameters.rb"
 
 class StackExchangeApi
 
@@ -35,7 +35,7 @@ class ThrottledHTTP
     unless response.code == 200
       puts "[Warning] Got response code `#{response.code}` which is not a Teapot."
       puts response.body
-      return {"items": []}
+      return {"items" => []}
     end
 
     result = JSON.parse(response.body)
@@ -84,10 +84,10 @@ class StackExchangeRequestBuilder
   """
   def tags(pages=1)
     query_params = {
-      "order": "desc",
-      "sort": "popular",
-      "pagesize": 100,
-      "filter": "!-.G.68grSaJo",  # Filter to only `count` and `name`
+      "order" => "desc",
+      "sort" => "popular",
+      "pagesize" => 100,
+      "filter" => "!-.G.68grSaJo",  # Filter to only `count` and `name`
     }
 
     responses = (1..pages).map do |page|
@@ -109,8 +109,8 @@ class StackExchangeRequestBuilder
   def top_answerers_for_tag(tag)
     path = "/tags/#{tag}/top-answerers/all_time"
     query_params = {
-      "pagesize": 50,
-      "filter": "!-pcLI4I7",
+      "pagesize" => 50,
+      "filter" => "!-pcLI4I7",
     }
 
     build_request path, query_params do |uri, query|
@@ -121,11 +121,11 @@ class StackExchangeRequestBuilder
   def answer_tags_for_user(userid)
     path = "/users/#{userid}/answers"
     query_params = {
-      "pagesize": 90,
-      "filter": "!SWJ_BpAceOUGGWr5yQ",
-      "min": 1,
-      "order": "desc",
-      "sort": "votes",
+      "pagesize" => 90,
+      "filter" => "!SWJ_BpAceOUGGWr5yQ",
+      "min" => 1,
+      "order" => "desc",
+      "sort" => "votes",
     }
 
     build_request path, query_params do |uri, query|
@@ -136,13 +136,13 @@ class StackExchangeRequestBuilder
   def current_user_info()
     path = "/me"
     query_params = {
-      "filter": "!*MxJcsZ)vC2RZAFo",
+      "filter" => "!*MxJcsZ)vC2RZAFo",
     }
 
     build_request path, query_params do |uri, query|
       user = @http.get_json(uri, :query => query)["items"].first
       answer_tags = answer_tags_for_user(user['user_id'])
-      
+
       MagicBlackBoxCurrentUser.new(
         answer_tags_to_tagscore_hash(answer_tags), user
       )
@@ -151,8 +151,8 @@ class StackExchangeRequestBuilder
 
   private def answer_tags_to_tagscore_hash(answer_tags)
     tagscores = Hash.new(0)
-    
-    answer_tags["items"].each do |question| 
+
+    answer_tags["items"].each do |question|
       question["tags"].each do |tag|
         tagscores[tag] += question["score"]
       end
@@ -166,11 +166,11 @@ class StackExchangeRequestBuilder
     path = "/questions"
 
     query_params = {
-      "filter": "!)IMAC7XMVlL73lbn4ecSt3vSeQnbTKKYflX(",
-      "pagesize": 100,
-      "todate": Time.now.to_i - 600,  # Must have been up for 10 minutes
-      "order": "desc",
-      "sort": "creation",
+      "filter" => "!)IMAC7XMVlL73lbn4ecSt3vSeQnbTKKYflX(",
+      "pagesize" => 100,
+      "todate" => Time.now.to_i - 600,  # Must have been up for 10 minutes
+      "order" => "desc",
+      "sort" => "creation",
     }
 
     build_request path, query_params do |uri, query|
@@ -182,7 +182,7 @@ class StackExchangeRequestBuilder
   private def question_to_blackbox_question(question)
     tags = question["tags"]
     answer_upvotes = if question.key? "answers" then question["answers"].map { |answer| answer["score"] } else [] end
-    creation_date = question["creation_date"] 
+    creation_date = question["creation_date"]
     bounty = question.key? "bounty_amount"
     close_votes = question["close_vote_count"]
     question_upvotes = question["score"]
@@ -205,7 +205,7 @@ end
 #     File.open("../../../data/#{tag}.json", "w") do |file|
 #       puts "Getting top answerers for tag `#{tag}`"
 #       response = S.top_answerers_for_tag(URI.escape(tag))
-      
+
 #       user_ids = response["items"].map { |top_answerer| top_answerer["user"]["user_id"] }
 
 #       user_ids.each do |userid|
@@ -223,5 +223,3 @@ end
 #     end
 #   end
 # end
-
-
