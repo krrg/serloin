@@ -8,7 +8,7 @@ class SessionController < ApplicationController
     params = CGI.parse(uri.query)
     params[:client_id] = ENV['CLIENT_ID']
     params[:client_secret] = ENV['CLIENT_SECRET']
-    params[:redirect_uri] =
+    params[:redirect_uri] = 'https://serloin.herokuapp.com/auth/stackoverflow/finalize'
     uri = URI.parse('https://stackexchange.com')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
