@@ -1,6 +1,6 @@
 require "httparty"
 require "glutton_ratelimit"
-
+require "../magicblackbox/MagicBlackBoxParameters.rb"
 
 class StackExchangeApi
 
@@ -52,17 +52,22 @@ end
 
 class StackExchangeRequestBuilder
 
-  def initialize(base_uri: 'api.stackexchange.com', version: '2.2', site: 'stackoverflow', access_token: nil)
+  def initialize(base_uri: 'api.stackexchange.com', version: '2.2', site: 'stackoverflow', access_token: nil, app_key: nil)
     @base_uri = base_uri
     @version = version
     @site = site
     @access_token = access_token
+    @app_key = app_key
     @http = ThrottledHTTP.new
   end
 
   def build_request(path, query_params={})
     unless @access_token.nil?
-      query_params.merge!({"access_token" => @access_token, "key" => ")T2x8ZEOMl8neRq7th6VRg(("})
+      query_params.merge!({"access_token" => @access_token})
+    end
+
+    unless @app_key.nil?
+      query_params.merge!({"key" => @app_key})
     end
 
     yield(
@@ -128,32 +133,94 @@ class StackExchangeRequestBuilder
     end
   end
 
-end
+  def current_user_info()
+    path = "/me"
+    query_params = {
+      "filter": "!*MxJcsZ)vC2RZAFo",
+    }
 
-S = StackExchangeRequestBuilder.new(access_token: "<access_token here>")
-
-File.open("../../../data/edge_entries.csv", "w") do |edge_file|
-  S.tags(1).map do |tag|
-    File.open("../../../data/#{tag}.json", "w") do |file|
-      puts "Getting top answerers for tag `#{tag}`"
-      response = S.top_answerers_for_tag(URI.escape(tag))
+    build_request path, query_params do |uri, query|
+      user = @http.get_json(uri, :query => query)["items"].first
+      answer_tags = answer_tags_for_user(user['user_id'])
       
-      user_ids = response["items"].map { |top_answerer| top_answerer["user"]["user_id"] }
-
-      user_ids.each do |userid|
-        puts "\t Getting answer tags for user #{userid} under tag #{tag}"
-        answer_tags = S.answer_tags_for_user(userid)["items"]
-
-        answer_tags.each do |answer|
-          upvotes = answer["score"]
-          answer["tags"].each do |tag2|
-            edge_file.write([tag, tag2, upvotes].join(",") + "\n")
-          end
-        end
-
-      end
+      MagicBlackBoxCurrentUser.new(
+        answer_tags_to_tagscore_hash(answer_tags), user
+      )
     end
   end
+
+  private def answer_tags_to_tagscore_hash(answer_tags)
+    tagscores = Hash.new(0)
+    
+    answer_tags["items"].each do |question| 
+      question["tags"].each do |tag|
+        tagscores[tag] += question["score"]
+      end
+    end
+
+    tagscores
+  end
+
+
+  def get_most_recent_questions()
+    path = "/questions"
+
+    query_params = {
+      "filter": "!)IMAC7XMVlL73lbn4ecSt3vSeQnbTKKYflX(",
+      "pagesize": 100,
+      "todate": Time.now.to_i - 600,  # Must have been up for 10 minutes
+      "order": "desc",
+      "sort": "creation",
+    }
+
+    build_request path, query_params do |uri, query|
+      @http.get_json(uri, :query => query)["items"]
+        .map { |question| question_to_blackbox_question(question) }
+    end
+  end
+
+  private def question_to_blackbox_question(question)
+    tags = question["tags"]
+    answer_upvotes = if question.key? "answers" then question["answers"].map { |answer| answer["score"] } else [] end
+    creation_date = question["creation_date"] 
+    bounty = question.key? "bounty_amount"
+    close_votes = question["close_vote_count"]
+    question_upvotes = question["score"]
+    page_views = question["view_count"]
+    asker_rep = question["owner"]["reputation"]
+    is_closed = question.key? "closed_date"
+
+    MagicBlackBoxCurrentQuestion.new(
+      tags, answer_upvotes, creation_date,
+      bounty, close_votes, question_upvotes,
+      page_views, asker_rep, is_closed
+    )
+  end
+
 end
+
+# File.open("../../../data/edge_entries.csv", "w") do |edge_file|
+#   S.tags(1).map do |tag|
+#     File.open("../../../data/#{tag}.json", "w") do |file|
+#       puts "Getting top answerers for tag `#{tag}`"
+#       response = S.top_answerers_for_tag(URI.escape(tag))
+      
+#       user_ids = response["items"].map { |top_answerer| top_answerer["user"]["user_id"] }
+
+#       user_ids.each do |userid|
+#         puts "\t Getting answer tags for user #{userid} under tag #{tag}"
+#         answer_tags = S.answer_tags_for_user(userid)["items"]
+
+#         answer_tags.each do |answer|
+#           upvotes = answer["score"]
+#           answer["tags"].each do |tag2|
+#             edge_file.write([tag, tag2, upvotes].join(",") + "\n")
+#           end
+#         end
+
+#       end
+#     end
+#   end
+# end
 
 

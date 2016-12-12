@@ -24,15 +24,15 @@ class MagicBlackBoxCurrentUser
 end
 
 class MagicBlackBoxCurrentQuestion
-  attr_reader :tagsSet
-  attr_reader :upvotesOfAnswersWithoutFlagsList
-  attr_reader :creationTime
-  attr_reader :bountyAvailable
-  attr_reader :numberOfFlags
-  attr_reader :questionUpvotes
-  attr_reader :pageViews
-  attr_reader :questionCreatorReputation
-  attr_reader :questionIsClosedForAnswers
+  attr_reader :tagsSet   # A collection of tags on the question
+  attr_reader :upvotesOfAnswersWithoutFlagsList  # The upvote of answers, maybe sorted.
+  attr_reader :creationTime  # The creation time in epoch
+  attr_reader :bountyAvailable  # True / False
+  attr_reader :numberOfFlags  # i.e. is it closed
+  attr_reader :questionUpvotes  # Duh Ken
+  attr_reader :pageViews  # Can we get this?
+  attr_reader :questionCreatorReputation  # rep of the asker
+  attr_reader :questionIsClosedForAnswers  # is it closed? (boolean)
 	def initialize(tagsSet, upvotesOfAnswersWithoutFlagsList, creationTime,
 				bountyAvailable, numberOfFlags, questionUpvotes, pageViews,
 				questionCreatorReputation, questionIsClosedForAnswers)
