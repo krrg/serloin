@@ -1,9 +1,9 @@
 <% provide(:title, "Create Session") %>
 
 <div class="jumbotron" style="text-align:center;">
-  <h1>You were successfully authenticated to Stack Exchange!</h1>
+  <h2>You were successfully authenticated to Stack Exchange!</h2>
   <h2><%= @access_token %></h2>
-  <%= link_to "Make Recommendations", recommendation_results_path, class: "btn btn-primary", id: "recommend-btn" %>
+  <%= link_to "Get Recommendations", recommendation_results_path, class: "btn btn-primary", id: "recommend-btn" %>
 </div>
 
 <div id="waiting-div" class="row text-center" style="display:none;">
