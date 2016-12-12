@@ -13,6 +13,6 @@ class SessionController < ApplicationController
     post_requ = Net::HTTP::Post.new("/oauth/access_token")
     post_requ.add_field('Content-Type', 'application/x-www-form-urlencoded')
     post_requ.set_form_data(params)
-    response = http.request(request)
+    response = http.request(post_requ)
   end
 end
