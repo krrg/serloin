@@ -6,6 +6,9 @@ class SessionController < ApplicationController
     puts "hello"
     uri = URI.parse(request.url)
     params = CGI.parse(uri.query)
+    params[:client_id] = ENV['CLIENT_ID']
+    params[:client_secret] = ENV['CLIENT_SECRET']
+    params[:redirect_uri] =
     uri = URI.parse('https://stackexchange.com')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -16,5 +19,9 @@ class SessionController < ApplicationController
     @response = http.request(post_requ)
     puts "CODE: #{response.code}"
     puts "BODY: #{response.body}"
+  end
+
+  def finalize
+
   end
 end
