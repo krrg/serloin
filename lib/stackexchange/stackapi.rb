@@ -144,7 +144,7 @@ class StackExchangeRequestBuilder
       answer_tags = answer_tags_for_user(user['user_id'])
 
       MagicBlackBoxCurrentUser.new(
-        answer_tags_to_tagscore_hash(answer_tags), user
+        answer_tags_to_tagscore_hash(answer_tags), user['reputation']
       )
     end
   end
