@@ -41,14 +41,8 @@ class SessionController < ApplicationController
         MagicBlackBoxAdjacencyGraphData.new(user_info, question), currentTime)
       @questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
     end
-    @sorted_questions = @questionList.sort_by {|question,score| -score}
+    @sorted_questions = @questionList.sort_by {|question,tuple| -tuple[0]}
   end
 
-  def find_question(recent_question, id)
-    recent_questions.each do |question|
-      if question.questionId == id
-        return question 
-      end
-    end
-  end
+
 end
