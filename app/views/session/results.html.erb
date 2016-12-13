@@ -5,3 +5,5 @@
   <% full_question = find_question(@recent_questions, question[0]) %>
   <p><%= link_to question[0], "https://stackoverflow.com/questions/#{question[0]}" %> Relevance: <%= @questionList[question[0]] %></p>
 <% end %>
+
+<h2><%= @recent_questions.inspect %></h2>
