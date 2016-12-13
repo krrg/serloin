@@ -3,8 +3,13 @@
 
 <% @sorted_questions.each do |question| %>
   <% full_question = find_question(@recent_questions, question[0]) %>
-  <p><%= link_to "#{full_question.title} (#{question[0]})", "https://stackoverflow.com/questions/#{question[0]}" %> <b style="color:#228B22">Question Tags: <%= full_question.tagsSet.inspect %></b> Relevance: <%= @questionList[question[0]] %></p>
-
+  <p><%= link_to "#{full_question.title} (#{question[0]})", "https://stackoverflow.com/questions/#{question[0]}" %>
+    <br>
+    <b style="color:#228B22">Question Tags: <%= full_question.tagsSet.inspect %></b>
+    <br>
+    Relevance: <%= @questionList[question[0]] %>
+  </p>
+  <hr>
 <% end %>
 
 <!--<h2><%= @recent_questions.inspect %></h2>
