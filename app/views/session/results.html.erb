@@ -2,5 +2,6 @@
 <h1>Here are your results!</h1>
 
 <% @sorted_questions.each do |question| %>
-  <%= link_to question[0], "https://stackoverflow.com/questions/#{question[0]}" %>
+
+  <p><%= link_to question[0], "https://stackoverflow.com/questions/#{question[0]}" %></p>
 <% end %>
