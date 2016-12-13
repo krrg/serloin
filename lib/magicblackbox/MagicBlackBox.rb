@@ -221,7 +221,7 @@ class MagicBlackBox
 		childrenValue = 0
 		if category.children != nil
 			category.children.each do |child|
-				puts "--------------" + child.name
+				#puts "--------------" + child.name
 				childValue = calculateValues(child)
 
 				childrenValue = childrenValue + childValue
@@ -231,10 +231,10 @@ class MagicBlackBox
 		myValue = category.calculationFunction.call()
 
 		comboValue = myValue + childrenValue
-		puts "comboValue #{comboValue}"
+		#puts "comboValue #{comboValue}"
 
 		myWeightedValue = category.calculateWeightedScore(comboValue)
-		puts "myWeightedValue #{myWeightedValue}"
+		#puts "myWeightedValue #{myWeightedValue}"
 		return myWeightedValue
 	end
 
