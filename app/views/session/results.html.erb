@@ -1,3 +1,5 @@
 <% provide(:title, "Results") %>
+<h2>Session access token <%= session[:access_token] %></h2>
+<h2>Local access token <%= @access_token %></h2>
 <h2><%= @recent_questions.inspect %></h2>
 <h2><%= @questionList.inspect %></h2>
