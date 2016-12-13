@@ -1,5 +1,5 @@
 require_relative './MagicBlackBoxParameters.rb'
-
+require 'set'
 class MagicBlackBoxCategory
   attr_reader :name
   attr_reader :weight
@@ -35,7 +35,7 @@ class MagicBlackBox
 		if deltaTime < minTimeThreshold
 			return 1
 		elsif deltaTime >highTimeThreshold
-			return 0
+			return 0 
 		else
 			return 1 - (deltaTime.to_f/highTimeThreshold)
 		end
@@ -221,20 +221,24 @@ class MagicBlackBox
 		childrenValue = 0
 		if category.children != nil
 			category.children.each do |child|
-				#puts "--------------" + child.name
+				puts "--------------" + child.name
 				childValue = calculateValues(child)
-
+				if childValue.nan?
+					childValue = 0
+				end
 				childrenValue = childrenValue + childValue
 			end
 		end
 
 		myValue = category.calculationFunction.call()
-
+		if myValue.nan?
+			myValue = 0
+		end
 		comboValue = myValue + childrenValue
-		#puts "comboValue #{comboValue}"
+		puts "comboValue #{comboValue}"
 
 		myWeightedValue = category.calculateWeightedScore(comboValue)
-		#puts "myWeightedValue #{myWeightedValue}"
+		puts "myWeightedValue #{myWeightedValue}"
 		return myWeightedValue
 	end
 
@@ -272,22 +276,29 @@ class MagicBlackBox
 	end
 end
 
-class MagicBlackBoxRunner
-	def initialize(currentUser, questionList, adjacencyGraphData)
-		@currentUser = currentUser
-		@questionList = questionList
-		@adjacencyGraphData = adjacencyGraphData
-	end
-	def run()
-	  currentTime = Time.now.to_i
-	  questionList = Hash.new
-	  @questionList.each do |question|
-	  	magicBlackBoxParameters = MagicBlackBoxParameters.new(@currentUser, question, @adjacencyGraphData, currentTime)
-		questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
-	  end
-		questionList.sort_by {|question,score| [-score]}
-	end
-end
+    question = MagicBlackBoxCurrentQuestion.new(['swift3', 'facebook-login', 'xcode8', 'ios10'].to_set, [], 1481650896, false, 0, 0, 3, 1505, false, 41127357)
+    cu = MagicBlackBoxCurrentUser.new({'swift3' => 35, 'ios10' => 2, "c#" => 6}, 300)
+    #ken info {'mongodb', 'projection', 'java', 'javascript', 'jquery', 'python', 'tree', 'android', 'if-statement', 'c++', 'list', 'c++builder'},
+    currentTime = Time.now.to_i
+    params = MagicBlackBoxParameters.new(cu, question, MagicBlackBoxAdjacencyGraphData.new(cu, question), currentTime)
+    puts MagicBlackBox.new(params).runBlackBox()
+
+# class MagicBlackBoxRunner
+# 	def initialize(currentUser, questionList, adjacencyGraphData)
+# 		@currentUser = currentUser
+# 		@questionList = questionList
+# 		@adjacencyGraphData = adjacencyGraphData
+# 	end
+# 	def run()
+# 	  currentTime = Time.now.to_i
+# 	  questionList = Hash.new
+# 	  @questionList.each do |question|
+# 	  	magicBlackBoxParameters = MagicBlackBoxParameters.new(@currentUser, question, @adjacencyGraphData, currentTime)
+# 		questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
+# 	  end
+# 		questionList.sort_by {|question,score| [-score]}
+# 	end
+# end
 
 #sampleData
 
