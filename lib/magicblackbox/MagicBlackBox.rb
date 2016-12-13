@@ -257,10 +257,10 @@ class MagicBlackBox
 		@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
 		@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
 
-		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.3, 1,
+		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.1, 1,
 			[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
 
-		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.7, 1, nil, method(:calculateTagRelevance))
+		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.9, 1, nil, method(:calculateTagRelevance))
 
 		@scoreRatingCategories = MagicBlackBoxCategory.new("scoreRatingCategories", 0.5, 1,
 			[@questionRelevance,@tagRelevance], method(:calculateScoreRatingCategories))
