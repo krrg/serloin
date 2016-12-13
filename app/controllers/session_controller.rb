@@ -37,13 +37,13 @@ class SessionController < ApplicationController
     recent_questions = requ_builder.most_recent_questions()
 
     currentTime = Time.now.to_i
-    questionList = Hash.new
+    @questionList = Hash.new
     recent_questions.each do |question|
       magicBlackBoxParameters = MagicBlackBoxParameters.new(user_info, question,
         MagicBlackBoxAdjacencyGraphData.new(user_info, question), currentTime)
-      questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
+      @questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
     end
-    questionList.sort_by {|question,score| [-score]}
-
+    @questionList.sort_by {|question,score| [-score]}
+    puts @questionList
   end
 end
