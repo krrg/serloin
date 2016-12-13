@@ -190,7 +190,7 @@ class StackExchangeRequestBuilder
     asker_rep = question["owner"]["reputation"]
     is_closed = question.key? "closed_date"
     question_id = question["question_id"]
-
+    puts question_id 
     MagicBlackBoxCurrentQuestion.new(
       tags, answer_upvotes, creation_date,
       bounty, close_votes, question_upvotes,
