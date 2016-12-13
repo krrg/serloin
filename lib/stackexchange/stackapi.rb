@@ -166,11 +166,11 @@ class StackExchangeRequestBuilder
     path = "/questions"
 
     query_params = {
-      "filter" => "!)IMAC7XMVlKG0H_pp2p35TC6b7T8TaZ*HbWV",
+      "filter" => "!1PUh93)XFP63W)XMP1SId(Le9aYxX5bDg",#"!)IMAC7XMVlKG0H_pp2p35TC6b7T8TaZ*HbWV",
       "pagesize" => 100,
       "todate" => Time.now.to_i - 600,  # Must have been up for 10 minutes
       "order" => "desc",
-      "sort" => "creation",
+      "sort" => "creation"
     }
 
     build_request path, query_params do |uri, query|
@@ -190,11 +190,12 @@ class StackExchangeRequestBuilder
     asker_rep = question["owner"]["reputation"]
     is_closed = question.key? "closed_date"
     question_id = question["question_id"]
+    title = question["title"]
 
     MagicBlackBoxCurrentQuestion.new(
       tags, answer_upvotes, creation_date,
       bounty, close_votes, question_upvotes,
-      page_views, asker_rep, is_closed, question_id
+      page_views, asker_rep, is_closed, question_id, title
     )
   end
 

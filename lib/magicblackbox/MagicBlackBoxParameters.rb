@@ -35,9 +35,10 @@ class MagicBlackBoxCurrentQuestion
   attr_reader :questionCreatorReputation  # rep of the asker
   attr_reader :questionIsClosedForAnswers  # is it closed? (boolean)
 	attr_reader :questionId
+  attr_reader :title
 	def initialize(tagsSet, upvotesOfAnswersWithoutFlagsList, creationTime,
 				bountyAvailable, numberOfFlags, questionUpvotes, pageViews,
-				questionCreatorReputation, questionIsClosedForAnswers, questionId)
+				questionCreatorReputation, questionIsClosedForAnswers, questionId, title)
 
 		@tagsSet = tagsSet
 		@upvotesOfAnswersWithoutFlagsList = upvotesOfAnswersWithoutFlagsList
@@ -49,6 +50,7 @@ class MagicBlackBoxCurrentQuestion
 		@questionCreatorReputation = questionCreatorReputation
 		@questionIsClosedForAnswers = questionIsClosedForAnswers
 		@questionId = questionId
+    @title = title
 	end
 end
 
