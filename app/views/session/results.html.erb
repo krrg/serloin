@@ -1,6 +1,6 @@
 <% provide(:title, "Results") %>
-<h2>Session access token <%= session[:access_token] %></h2>
-<h2>Local access token <%= @access_token %></h2>
-<h2><%= @recent_questions.inspect %></h2>
-<h2><%= @questionList.inspect %></h2>
-<h2><%= @sorted_questions.inspect %></h2>
+<h1>Here are your results!</h1>
+
+<% @sorted_questions.each do |question| %>
+  <%= link_to question[0].questionId, "https://stackoverflow.com/questions/#{question[0].questionId}" %>
+<% end %>
