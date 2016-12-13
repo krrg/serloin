@@ -41,6 +41,6 @@ class SessionController < ApplicationController
         MagicBlackBoxAdjacencyGraphData.new(user_info, question), currentTime)
       @questionList[question.questionId] = MagicBlackBox.new(magicBlackBoxParameters).runBlackBox()
     end
-    @sorted_questions = @questionList.sort_by {|question,score| [-score]}
+    @sorted_questions = @questionList.sort_by {|question,score| -score}
   end
 end
