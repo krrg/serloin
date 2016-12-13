@@ -223,15 +223,15 @@ class MagicBlackBox
 			category.children.each do |child|
 				puts "--------------" + child.name
 				childValue = calculateValues(child)
-				if childValue.nan?
-					childValue = 0
+				if childValue.to_f.nan?
+					childValue = 0.0
 				end
 				childrenValue = childrenValue + childValue
 			end
 		end
 
 		myValue = category.calculationFunction.call()
-		if myValue.nan?
+		if myValue.to_f.nan?
 			myValue = 0
 		end
 		comboValue = myValue + childrenValue
