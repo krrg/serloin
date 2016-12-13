@@ -180,6 +180,7 @@ class StackExchangeRequestBuilder
   end
 
   private def question_to_blackbox_question(question)
+    puts question.inspect()
     tags = question["tags"]
     answer_upvotes = if question.key? "answers" then question["answers"].map { |answer| answer["score"] } else [] end
     creation_date = question["creation_date"]
@@ -190,7 +191,7 @@ class StackExchangeRequestBuilder
     asker_rep = question["owner"]["reputation"]
     is_closed = question.key? "closed_date"
     question_id = question["question_id"]
-    puts question_id 
+
     MagicBlackBoxCurrentQuestion.new(
       tags, answer_upvotes, creation_date,
       bounty, close_votes, question_upvotes,
