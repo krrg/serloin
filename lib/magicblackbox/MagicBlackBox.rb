@@ -163,16 +163,16 @@ class MagicBlackBox
 
 	def calculateTagRelevance()
 		n = @user.tagReputationHash.length
-		@@UTAGS = @user.tagReputationHash
-		@@QTAGS  = @question.tagsSet
+		UTAGS = @user.tagReputationHash
+		QTAGS  = @question.tagsSet
 
 		totalRep = 0
-		@@UTAGS.each do |tag, rep|
+		UTAGS.each do |tag, rep|
 			totalRep = totalRep + rep
 		end
-		@@UTAGSProportion = Hash.new(0)
-		@@UTAGS.each do |tag, rep|
-			@@UTAGSProportion[tag] = rep.to_f/totalRep
+		UTAGSProportion = Hash.new(0)
+		UTAGS.each do |tag, rep|
+			UTAGSProportion[tag] = rep.to_f/totalRep
 		end
 
 		totalExpertRep = 0
@@ -186,8 +186,8 @@ class MagicBlackBox
 		end
 
 		differenceHash = Hash.new(0)
-		@@UTAGS.keys.each do |tag|
-			differenceHash[tag] = (@@UTAGSProportion[tag] - adjacencyDataProportion[tag]).abs
+		UTAGS.keys.each do |tag|
+			differenceHash[tag] = (UTAGSProportion[tag] - adjacencyDataProportion[tag]).abs
 		end
 
 		totalDifference = 0
