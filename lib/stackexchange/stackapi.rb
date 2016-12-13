@@ -170,7 +170,7 @@ class StackExchangeRequestBuilder
       "pagesize" => 100,
       "todate" => Time.now.to_i - 600,  # Must have been up for 10 minutes
       "order" => "desc",
-      "sort" => "creation",
+      "sort" => "creation"
     }
 
     build_request path, query_params do |uri, query|
