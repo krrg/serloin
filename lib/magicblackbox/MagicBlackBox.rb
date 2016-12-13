@@ -180,7 +180,7 @@ class MagicBlackBox
 		end
 
 		adjacencyDataProportion = Hash.new
-		@adjacencyData.each do |tag, value|
+		@adjacencyData.adjacencyGraphData.each do |tag, value|
 			adjacencyDataProportion[tag] = value.to_f/totalExpertRep
 		end
 
