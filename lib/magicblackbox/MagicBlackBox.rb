@@ -163,16 +163,16 @@ class MagicBlackBox
 
 	def calculateTagRelevance()
 		n = @user.tagReputationHash.length
-		UTAGS = @user.tagReputationHash
-		QTAGS  = @question.tagsSet
+		uTAGS = @user.tagReputationHash
+		qTAGS  = @question.tagsSet
 
 		totalRep = 0
-		UTAGS.each do |tag, rep|
+		uTAGS.each do |tag, rep|
 			totalRep = totalRep + rep
 		end
-		UTAGSProportion = Hash.new(0)
-		UTAGS.each do |tag, rep|
-			UTAGSProportion[tag] = rep.to_f/totalRep
+		uTAGSProportion = Hash.new(0)
+		uTAGS.each do |tag, rep|
+			uTAGSProportion[tag] = rep.to_f/totalRep
 		end
 
 		totalExpertRep = 0
@@ -186,8 +186,8 @@ class MagicBlackBox
 		end
 
 		differenceHash = Hash.new(0)
-		UTAGS.keys.each do |tag|
-			differenceHash[tag] = (UTAGSProportion[tag] - adjacencyDataProportion[tag]).abs
+		uTAGS.keys.each do |tag|
+			differenceHash[tag] = (uTAGSProportion[tag] - adjacencyDataProportion[tag]).abs
 		end
 
 		totalDifference = 0
@@ -259,7 +259,7 @@ class MagicBlackBox
     #puts @adjacencyData.inspect
 		@currentTime = magicBlackBoxParameters.currentTime
 
-		@recency = MagicBlackBoxCategory.new("recency", 0.2, 1, nil, method(:calculateRecency))
+		#@recency = MagicBlackBoxCategory.new("recency", 0.2, 1, nil, method(:calculateRecency))
 		@notAnswered = MagicBlackBoxCategory.new("notAnswered", 0.3, 1, nil, method(:calculateNotAnswered))
 		@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.05, 1, nil, method(:calculateBountyAvailable))
 		@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
@@ -281,7 +281,7 @@ class MagicBlackBox
 
 	def runBlackBox()
 	   unweightedValues = Hash.new
-	   unweightedValues["recency"] = calculateUnweightedCategotyValue(@recency)
+	   #unweightedValues["recency"] = calculateUnweightedCategotyValue(@recency)
 	   unweightedValues["notAnswered"] = calculateUnweightedCategotyValue(@notAnswered)
 	   unweightedValues["bountyAvailable"] = calculateUnweightedCategotyValue(@bountyAvailable)
 	   unweightedValues["questionQuality"] = calculateUnweightedCategotyValue(@questionQuality)
