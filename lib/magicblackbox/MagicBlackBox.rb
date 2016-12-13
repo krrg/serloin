@@ -261,7 +261,7 @@ class MagicBlackBox
 
 		#@recency = MagicBlackBoxCategory.new("recency", 0.2, 1, nil, method(:calculateRecency))
 		@notAnswered = MagicBlackBoxCategory.new("notAnswered", 0.3, 1, nil, method(:calculateNotAnswered))
-		@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.05, 1, nil, method(:calculateBountyAvailable))
+		@bountyAvailable = MagicBlackBoxCategory.new("bountyAvailable", 0.25, 1, nil, method(:calculateBountyAvailable))
 		@questionQuality = MagicBlackBoxCategory.new("questionQuality", 0.25, 1, nil, method(:calculateQuestionQuality))
 		@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
 
