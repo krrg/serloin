@@ -57,7 +57,7 @@ class MagicBlackBoxAdjacencyGraphData
   attr_reader :adjacencyGraphData
 
 	def initialize(currentUser, currentQuestion)
-    @adjacencyGraphData = Hash.new
+    @adjacencyGraphData = Hash.new(0)
 
 		currentUser.tagReputationHash.each_key do |tag|
 			currentQuestion.tagsSet.each do |qtag|
