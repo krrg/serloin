@@ -166,7 +166,7 @@ class StackExchangeRequestBuilder
     path = "/questions"
 
     query_params = {
-      "filter" => "!)IMAC7XMVlL73lbn4ecSt3vSeQnbTKKYflX(",
+      "filter" => "!)IMAC7XMVlKG0H_pp2p35TC6b7T8TaZ*HbWV",
       "pagesize" => 100,
       "todate" => Time.now.to_i - 600,  # Must have been up for 10 minutes
       "order" => "desc",
