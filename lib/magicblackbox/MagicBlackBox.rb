@@ -1,5 +1,6 @@
 require_relative './MagicBlackBoxParameters.rb'
 require 'set'
+require 'json'
 class MagicBlackBoxCategory
   attr_reader :name
   attr_reader :weight
@@ -242,6 +243,13 @@ class MagicBlackBox
 		return myWeightedValue
 	end
 
+	def calculateUnweightedCategotyValue(category)
+		myValue = category.calculationFunction.call()
+		if myValue.to_f.nan?
+			myValue = 0
+		end
+		myValue
+	end
 
 	def initialize(magicBlackBoxParameters)
 
@@ -272,7 +280,17 @@ class MagicBlackBox
     end
 
 	def runBlackBox()
-	   calculateValues(@everythingCategory)
+	   unweightedValues = Hash.new
+	   unweightedValues["recency"] = calculateUnweightedCategotyValue(@recency)
+	   unweightedValues["notAnswered"] = calculateUnweightedCategotyValue(@notAnswered)
+	   unweightedValues["bountyAvailable"] = calculateUnweightedCategotyValue(@bountyAvailable)
+	   unweightedValues["questionQuality"] = calculateUnweightedCategotyValue(@questionQuality)
+	   unweightedValues["questionDifficulty"] = calculateUnweightedCategotyValue(@questionDifficulty)
+	   unweightedValues["tagRelevance"] = calculateUnweightedCategotyValue(@tagRelevance)
+	   unweightedValues["dealBreakerCategory"] = calculateUnweightedCategotyValue(@dealBreakerCategory)
+	   
+	   return calculateValues(@everythingCategory),unweightedValues.to_json
+
 	end
 end
 
