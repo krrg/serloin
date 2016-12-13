@@ -169,7 +169,7 @@ class MagicBlackBox
 		@@UTAGS.each do |tag, rep|
 			totalRep = totalRep + rep
 		end
-		@@UTAGSProportion = Hash.new
+		@@UTAGSProportion = Hash.new(0)
 		@@UTAGS.each do |tag, rep|
 			@@UTAGSProportion[tag] = rep.to_f/totalRep
 		end
@@ -179,12 +179,12 @@ class MagicBlackBox
 			totalExpertRep = totalExpertRep + value
 		end
 
-		adjacencyDataProportion = Hash.new
+		adjacencyDataProportion = Hash.new(0)
 		@adjacencyData.adjacencyGraphData.each do |tag, value|
 			adjacencyDataProportion[tag] = value.to_f/totalExpertRep
 		end
 
-		differenceHash = Hash.new
+		differenceHash = Hash.new(0)
 		@@UTAGS.keys.each do |tag|
 			differenceHash[tag] = (@@UTAGSProportion[tag] - adjacencyDataProportion[tag]).abs
 		end
@@ -221,7 +221,7 @@ class MagicBlackBox
 		childrenValue = 0
 		if category.children != nil
 			category.children.each do |child|
-				puts "--------------" + child.name
+				#puts "--------------" + child.name
 				childValue = calculateValues(child)
 				if childValue.to_f.nan?
 					childValue = 0.0
@@ -235,10 +235,10 @@ class MagicBlackBox
 			myValue = 0
 		end
 		comboValue = myValue + childrenValue
-		puts "comboValue #{comboValue}"
+		#puts "comboValue #{comboValue}"
 
 		myWeightedValue = category.calculateWeightedScore(comboValue)
-		puts "myWeightedValue #{myWeightedValue}"
+		#puts "myWeightedValue #{myWeightedValue}"
 		return myWeightedValue
 	end
 
