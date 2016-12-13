@@ -50,7 +50,6 @@ class MagicBlackBoxCurrentQuestion
 		@questionIsClosedForAnswers = questionIsClosedForAnswers
 		@questionId = questionId
 	end
-
 end
 
 class MagicBlackBoxAdjacencyGraphData
