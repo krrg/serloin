@@ -67,12 +67,14 @@ class MagicBlackBoxAdjacencyGraphData
   end
 
   def getValueFromAdjacencyGraph(tag, qtag)
-     puts tag, qtag
+
      return_val = Graph.upvotes_for_tags(tag, qtag)
      if return_val == nil
+       puts "#{tag} #{qtag} 0"
        return 0
      else
-       return return_val
+       puts "#{tag} #{qtag} #{return_val.upvotes}"
+       return return_val.upvotes
      end
   end
 end

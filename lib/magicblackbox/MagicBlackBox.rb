@@ -248,6 +248,7 @@ class MagicBlackBox
 		@user = magicBlackBoxParameters.currentUser
 		@question = magicBlackBoxParameters.currentQuestion
 		@adjacencyData = magicBlackBoxParameters.adjacencyGraphData
+    #puts @adjacencyData.inspect
 		@currentTime = magicBlackBoxParameters.currentTime
 
 		@recency = MagicBlackBoxCategory.new("recency", 0.2, 1, nil, method(:calculateRecency))

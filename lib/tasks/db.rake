@@ -1,3 +1,6 @@
+require './lib/magicblackbox/MagicBlackBoxParameters'
+require './lib/magicblackbox/MagicBlackBox'
+
 namespace :db do
 
   desc "Load graph edge data from the given CSV file"
@@ -17,7 +20,7 @@ namespace :db do
     end
     count = 1
     Graph.transaction do
-      hash.each do |key, value| 
+      hash.each do |key, value|
         key_parts = key.split(',')
         Graph.add_edge(key_parts[0], key_parts[1], Integer(value))
         count = count + 1
@@ -33,4 +36,13 @@ namespace :db do
     Graph.delete_all
   end
 
+
+  task magic_box: :environment do
+    question = MagicBlackBoxCurrentQuestion.new(['java', 'facebook-login', 'xcode8', 'ios10'].to_set, [], 1481650896, false, 0, 0, 3, 1505, false, 41127357)
+    cu = MagicBlackBoxCurrentUser.new({'swift3' => 35, 'ios10' => 2, "c#" => 6}, 300)
+    #ken info {'mongodb', 'projection', 'java', 'javascript', 'jquery', 'python', 'tree', 'android', 'if-statement', 'c++', 'list', 'c++builder'},
+    currentTime = Time.now.to_i
+    params = MagicBlackBoxParameters.new(cu, question, MagicBlackBoxAdjacencyGraphData.new(cu, question), currentTime)
+    puts MagicBlackBox.new(params).runBlackBox()
+  end
 end
