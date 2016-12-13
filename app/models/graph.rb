@@ -17,7 +17,7 @@ class Graph < ActiveRecord::Base
   end
 
   def Graph.upvotes_for_tags(src_tag, dest_tag)
-    self.where("src_tag = ? and dest_tag = ?", src_tag, dest_tag).first.upvotes
+    self.where("src_tag = ? and dest_tag = ?", src_tag, dest_tag).first
   end
 
 end

@@ -267,7 +267,7 @@ class MagicBlackBox
     end
 
 	def runBlackBox()
-	calculateValues(@everythingCategory)
+	   calculateValues(@everythingCategory)
 	end
 end
 

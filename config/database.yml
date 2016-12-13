@@ -13,8 +13,12 @@ default: &default
   timeout: 5000
 
 test:
-  <<: *default
+  username: postgres
+  password: postgres
+  adapter: postgresql
   database: db/test_database
+  pool: 5
+  timeout: 5000
 
 production:
   adapter: postgresql
