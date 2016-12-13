@@ -1,7 +1,8 @@
 <% provide(:title, "Results") %>
 <h1>Here are your results!</h1>
 
+<h2><%= @recent_questions.inpsect %>
 <% @sorted_questions.each do |question| %>
-
+  <% full_question = @recent_questions
   <p><%= link_to question[0], "https://stackoverflow.com/questions/#{question[0]}" %></p>
 <% end %>
