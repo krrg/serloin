@@ -58,23 +58,14 @@ class MagicBlackBoxAdjacencyGraphData
 	def initialize(currentUser, currentQuestion)
     @adjacencyGraphData = Hash.new(0)
 
-		currentUser.tagReputationHash.each_key do |tag|
-			currentQuestion.tagsSet.each do |qtag|
-				adjacencyGraphData[tag] += getValueFromAdjacencyGraph(tag, qtag)
-			end
+    user_tags = currentUser.tagReputationHash.keys
+		currentQuestion.tagsSet.each do |qtag|
+
+      records = Graph.relevant_question_rows(user_tags, qtag)
+      records.each do |record|
+          adjacencyGraphData[record.src_tag] += record.upvotes
+      end
+
 		end
-
-  end
-
-  def getValueFromAdjacencyGraph(tag, qtag)
-
-     return_val = Graph.upvotes_for_tags(tag, qtag)
-     if return_val == nil
-       #puts "#{tag} #{qtag} 0"
-       return 0
-     else
-       #puts "#{tag} #{qtag} #{return_val.upvotes}"
-       return return_val.upvotes
-     end
   end
 end

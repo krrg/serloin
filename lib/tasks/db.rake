@@ -36,7 +36,6 @@ namespace :db do
     Graph.delete_all
   end
 
-
   task magic_box: :environment do
     question = MagicBlackBoxCurrentQuestion.new(['java', 'facebook-login', 'xcode8', 'ios10'].to_set, [], 1481650896, false, 0, 0, 3, 1505, false, 41127357)
     cu = MagicBlackBoxCurrentUser.new({"mongodb"=>77, "projection"=>75, "java"=>60, "javascript"=>18, "jquery"=>13, "post"=>7, "python"=>22, "tree"=>6, "android"=>6, "performance"=>4, "if-statement"=>4, "c++"=>10, "list"=>4,

@@ -35,7 +35,7 @@ class MagicBlackBox
 		if deltaTime < minTimeThreshold
 			return 1
 		elsif deltaTime >highTimeThreshold
-			return 0 
+			return 0
 		else
 			return 1 - (deltaTime.to_f/highTimeThreshold)
 		end
@@ -223,17 +223,17 @@ class MagicBlackBox
 			category.children.each do |child|
 				puts "--------------" + child.name
 				childValue = calculateValues(child)
-				if childValue.nan?
-					childValue = 0
-				end
+				#if childValue.nan?
+				#	childValue = 0
+				#end
 				childrenValue = childrenValue + childValue
 			end
 		end
 
 		myValue = category.calculationFunction.call()
-		if myValue.nan?
-			myValue = 0
-		end
+		#if myValue.nan?
+		#	myValue = 0
+		#end
 		comboValue = myValue + childrenValue
 		puts "comboValue #{comboValue}"
 
@@ -276,12 +276,12 @@ class MagicBlackBox
 	end
 end
 
-    question = MagicBlackBoxCurrentQuestion.new(['swift3', 'facebook-login', 'xcode8', 'ios10'].to_set, [], 1481650896, false, 0, 0, 3, 1505, false, 41127357)
-    cu = MagicBlackBoxCurrentUser.new({'swift3' => 35, 'ios10' => 2, "c#" => 6}, 300)
+    #question = MagicBlackBoxCurrentQuestion.new(['swift3', 'facebook-login', 'xcode8', 'ios10'].to_set, [], 1481650896, false, 0, 0, 3, 1505, false, 41127357)
+    #cu = MagicBlackBoxCurrentUser.new({'swift3' => 35, 'ios10' => 2, "c#" => 6}, 300)
     #ken info {'mongodb', 'projection', 'java', 'javascript', 'jquery', 'python', 'tree', 'android', 'if-statement', 'c++', 'list', 'c++builder'},
-    currentTime = Time.now.to_i
-    params = MagicBlackBoxParameters.new(cu, question, MagicBlackBoxAdjacencyGraphData.new(cu, question), currentTime)
-    puts MagicBlackBox.new(params).runBlackBox()
+    #currentTime = Time.now.to_i
+    #params = MagicBlackBoxParameters.new(cu, question, MagicBlackBoxAdjacencyGraphData.new(cu, question), currentTime)
+    #puts MagicBlackBox.new(params).runBlackBox()
 
 # class MagicBlackBoxRunner
 # 	def initialize(currentUser, questionList, adjacencyGraphData)

@@ -20,4 +20,7 @@ class Graph < ActiveRecord::Base
     self.where("src_tag = ? and dest_tag = ?", src_tag, dest_tag).first
   end
 
+  def Graph.relevant_question_rows(user_tags, qtag)
+    self.where("dest_tag = ? and src_tag in (?)", qtag, user_tags)
+  end
 end
