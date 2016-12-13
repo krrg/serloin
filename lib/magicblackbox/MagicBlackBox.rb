@@ -266,7 +266,7 @@ class MagicBlackBox
 		@questionDifficulty = MagicBlackBoxCategory.new("questionDifficulty", 0.20, 1, nil, method(:calculateQuestionDifficulty))
 
 		@questionRelevance = MagicBlackBoxCategory.new("questionRelevance", 0.1, 1,
-			[@recency, @notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
+			[@notAnswered, @bountyAvailable,@questionQuality, @questionDifficulty], method(:calculateQuestionRelevance))
 
 		@tagRelevance = MagicBlackBoxCategory.new("tagRelevance", 0.9, 1, nil, method(:calculateTagRelevance))
 
