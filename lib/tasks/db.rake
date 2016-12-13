@@ -48,6 +48,8 @@ namespace :db do
     #ken info {'mongodb', 'projection', 'java', 'javascript', 'jquery', 'python', 'tree', 'android', 'if-statement', 'c++', 'list', 'c++builder'},
     currentTime = Time.now.to_i
     params = MagicBlackBoxParameters.new(cu, question, MagicBlackBoxAdjacencyGraphData.new(cu, question), currentTime)
-    puts MagicBlackBox.new(params).runBlackBox()
+    tuple = MagicBlackBox.new(params).runBlackBox()
+    puts tuple[0]
+    puts tuple[1]
   end
 end
